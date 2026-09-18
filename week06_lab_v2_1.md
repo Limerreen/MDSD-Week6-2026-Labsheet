@@ -442,8 +442,17 @@ ElevatedButton(
 
 > ✅ **Checkpoint 3.1** ถ่ายภาพหน้าจอ Debug Console ที่แสดง Status Code (ควรเป็น `201 Created`) พร้อม Response Body 
 ```text
-บันทึกรูปและคำตอบที่นี่
+Method & Endpoint: เรียก HTTP PUT ไปยัง [https://jsonplaceholder.typicode.com/posts/1](https://jsonplaceholder.typicode.com/posts/1)
+
+Headers: กำหนด 'Content-Type': 'application/json; charset=UTF-8'
+
+Request Body: ส่ง JSON ที่มีฟิลด์ studentId ("67030120") และ studentName ("นูรีน ปิ่นคล้าย")
+
+ผลลัพธ์ ได้รับ Status Code 200 OK แสดงว่าการส่งคำขอแก้ไขข้อมูลของโพสต์ ID 1 สำเร็จสมบูรณ์ โดยเซิร์ฟเวอร์ส่งก้อนข้อมูลที่อัปเดตแล้วกลับมาใน Response Body ทั้งหมด
 ```
+<img width="492" height="296" alt="image" src="https://github.com/user-attachments/assets/e7aca02d-fa80-4038-b59a-c3fe31ce9e4f" />
+
+<img width="495" height="285" alt="image" src="https://github.com/user-attachments/assets/492bf634-68c5-4366-8730-53da94807ddc" />
 
 ### ขั้นตอนที่ 3.2 — 🧠 คิดเอง/ออกแบบเอง
 
