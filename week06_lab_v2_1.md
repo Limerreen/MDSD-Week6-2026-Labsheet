@@ -528,13 +528,23 @@ GET https://fakestoreapi.com/products
 ไม่ว่าจะเลือกแบบไหน เป้าหมายคือต้องเห็น **ผลลัพธ์จริงจาก Fake Store API** ปรากฏขึ้นมา  ถ้ารันแล้วเจอ error หรือโค้ดจาก Gemini ผิดพลาด (เช่น import ขาด, ชื่อ field ไม่ตรงกับ JSON จริง) ให้จดบันทึกข้อความ error และวิธีแก้ไขไว้ในด้านล่าง
 
 ```text
-บันทึก error และการแก้ไขที่นี่
+
+* **ปัญหา/ข้อผิดพลาดที่พบ (Error):**
+* ไม่พบ Error ขณะรัน โค้ดที่ได้จาก Gemini สามารถ Parse ข้อมูลและดึงข้อมูลสินค้าทั้ง 20 รายการได้สำเร็จทันทีตั้งแต่ครั้งแรก
+
+* ข้อควรระวังที่พบในโค้ด: มีการนำเข้า `dart:io` (`SocketException`, `HttpException`) ซึ่งทำให้เหมาะกับการรันผ่าน Dart CLI หรือ Mobile เท่านั้น หากนำไปรันบน Flutter Web จะไม่รองรับแพ็กเกจนี้
+
+* **การแก้ไข/การปรับปรุง (Fix):**
+* ป้องกัน Runtime Type Error เรื่องชนิดข้อมูลตัวเลข โดยใช้ `(json['price'] as num?)?.toDouble() ?? 0.0` ซึ่งรองรับทั้งกรณีที่ API ส่งราคามาเป็นจำนวนเต็ม (`int`) หรือทศนิยม (`double`) ได้อย่างปลอดภัย
+* เลือกทดสอบผ่าน Dart Console ด้วยคำสั่ง `dart run lib/test_ai_product.dart` เพื่อรองรับการทำงานของ I/O และตรวจสอบข้อมูล API ได้สะดวกรวดเร็วโดยไม่ต้องรันหน้าจอ Web/Mobile
+
 ```
 
 > ✅ **Checkpoint 4.2** ถ่ายภาพหน้าจอ Debug Console ที่แสดงผลลัพธ์จริงจากการเรียก `fetchAiProducts()` (เช่น รายการสินค้าที่ print ออกมา) 
 ```text
 บันทึกรูปที่นี่
 ```
+<img width="842" height="442" alt="image" src="https://github.com/user-attachments/assets/7b62cbb9-cda7-4710-936e-f14f4c90fd8c" />
 
 ---
 
