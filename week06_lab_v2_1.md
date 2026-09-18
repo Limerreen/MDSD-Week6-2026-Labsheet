@@ -97,8 +97,19 @@ https://api.openweathermap.org/data/2.5/weather?q=Bangkok&appid=YOUR_API_KEY&uni
 > ✅ **Checkpoint 1.2** บันทึกด้านล่างว่านักศึกษาเลือกทดสอบกรณีใด คาดการณ์ Status Code ไว้ว่าอะไร และ Status Code จริงที่ได้คืออะไร (ตรงหรือไม่ตรงกับที่คาดไว้) พร้อมอธิบายว่าผลลัพธ์ที่ได้ตรงกับช่วง Status Code ใดตามตารางในบทเรียนหัวข้อ 6.3
 
 ```text
-บันทึกรูปและคำตอบที่นี่
+เปลี่ยนพารามิเตอร์ q เป็นชื่อเมืองที่ไม่มีอยู่จริงในระบบ (q=BangkokXYZ999) ยังใส่ appid ที่ถูกต้องไว้
+
+คาดการณ์ Status Code ก่อนส่ง 
+คาดว่าจะได้รับ Status Code 404 Not Found เนื่องจากเป็นการขอข้อมูล Resource (เมือง) ที่ไม่มีอยู่ในฐานข้อมูลของเซิร์ฟเวอร์
+
+Status Code จริงที่ได้รับ 
+ได้รับ 404 Not Found (และ Response Body ตอบกลับว่า {"cod":"404","message":"city not found"}) ซึ่งตรงกับที่คาดการณ์ไว้
+
+คำอธิบายช่วง Status Code
+ผลลัพธ์ 404 จัดอยู่ในช่วง 4xx (Client Error) หมายถึงผิดพลาดที่ฝั่ง Client ส่งคำขอที่ไม่ถูกต้องหรือไม่สามารถตอบสนองได้ (ในกรณีนี้คือการระบุชื่อเมืองที่ไม่มีอยู่จริง ทำให้ Server ค้นหา Resource ไม่เจอ)
 ```
+<img width="955" height="686" alt="image" src="https://github.com/user-attachments/assets/18fb058d-84c8-42d8-9a05-e6ea2a523223" />
+
 ---
 
 ## ส่วนที่ 2: สร้าง Model Class และเรียก API ด้วย http Package
