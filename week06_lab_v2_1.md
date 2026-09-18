@@ -606,6 +606,8 @@ Future<Weather> fetchWeatherWithDio(String city) async {
 ```text
 บันทึกรูปที่นี่
 ```
+<img width="721" height="222" alt="image" src="https://github.com/user-attachments/assets/2ca574a2-c722-449b-9a5e-d3c9f674fa4a" />
+
 ### ขั้นตอนที่ 5.4 — 🧠 คิดเอง/ออกแบบเอง
 
 `DioException` มีหลายชนิด (`DioExceptionType`) แต่โค้ดในขั้นตอนที่ 5.2 จัดการเฉพาะ `connectionTimeout` ด้านล่างเป็นตัวอย่างการเพิ่มเงื่อนไขให้อีก 1 ชนิด (`badResponse`) ให้ดูเป็นแนวทาง จากนั้นให้เพิ่มเงื่อนไข `else if` อีกอย่างน้อย 1 ชนิดด้วยตัวเอง โดยเลือกจาก `DioExceptionType.receiveTimeout` หรือ `DioExceptionType.connectionError` (ห้ามซ้ำกับ `badResponse` ที่ให้เป็นตัวอย่างแล้ว) พร้อมข้อความแจ้งเตือนภาษาไทยที่เหมาะสมกับสาเหตุนั้นโดยเฉพาะ (ค้นคว้าความหมายของแต่ละชนิดได้จากเอกสารของแพ็กเกจ `dio` บน pub.dev)
@@ -629,11 +631,27 @@ Future<Weather> fetchWeatherWithDio(String city) async {
 ```text
 บันทึกคำตอบที่นี่
 ```
+การแปลง JSON อัตโนมัติ
+http: ต้องเรียกคำสั่ง jsonDecode(response.body) เองแบบ Manual เพื่อแปลงเป็น Map
+dio: ทำ Auto-decoding ให้ทันที สามารถดึง response.data ไปใช้งานเป็น Map ได้โดยตรง
+
+การส่ง Query Parameters
+http: ต้องต่อ string พารามิเตอร์เข้ากับ URL ด้วยตัวเอง เช่น Uri.parse('$url?q=$city&appid=$key')
+dio: รองรับการส่งผ่าน Map ในช่อง queryParameters: {'q': city, ...} ทำให้โค้ดสะอาดและจัดการค่าง่ายกว่า
+การจัดการ Exception:
+http: ต้องดักจับหลาย Exception แยกคลาสกัน เช่น TimeoutException, ClientException, FormatException
+dio: รวบรวมทุกความผิดพลาดของระบบเครือข่ายไว้ใต้ DioException คลาสเดียว แล้วแยกประเภทผ่าน e.type เช่น connectionTimeout, connectionError, badResponse
 >
 > ✅ **Checkpoint 5.3** แสดงโค้ดเงื่อนไข `DioExceptionType` เพิ่มเติมที่เขียนเองในขั้นตอนที่ 5.4 
 
 ```text
-บันทึกคำตอบที่นี่
+} else if (e.type == DioExceptionType.receiveTimeout) {
+    // ดักจับกรณีส่งคำขอสำเร็จแต่รอรับข้อมูลกลับมานานเกินกำหนด
+    throw Exception('การรับข้อมูลจากเซิร์ฟเวอร์หมดเวลา กรุณาลองใหม่อีกครั้ง');
+  } else if (e.type == DioExceptionType.connectionError) {
+    // ดักจับกรณีไม่มีสัญญาณอินเทอร์เน็ต หรือการเชื่อมต่อล้มเหลว
+    throw Exception('ไม่สามารถเชื่อมต่ออินเทอร์เน็ตได้ กรุณาตรวจสอบการเชื่อมต่อของคุณ');
+  }
 ```
 ---
 
