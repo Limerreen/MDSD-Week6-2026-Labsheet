@@ -452,8 +452,6 @@ Request Body: ส่ง JSON ที่มีฟิลด์ studentId ("67030120
 ```
 <img width="492" height="296" alt="image" src="https://github.com/user-attachments/assets/e7aca02d-fa80-4038-b59a-c3fe31ce9e4f" />
 
-<img width="495" height="285" alt="image" src="https://github.com/user-attachments/assets/492bf634-68c5-4366-8730-53da94807ddc" />
-
 ### ขั้นตอนที่ 3.2 — 🧠 คิดเอง/ออกแบบเอง
 
 เขียนฟังก์ชัน `updateDemoPost()` เพิ่มเติมด้วยตัวเอง โดยใช้ `createDemoPost()` ในขั้นตอนที่ 3.1 เป็นต้นแบบโครงสร้าง แต่เปลี่ยนให้เรียก HTTP Method **PUT** ไปยัง `https://jsonplaceholder.typicode.com/posts/1` พร้อม body ที่คุณกำหนดเนื้อหาให้มีชื่อนักศึกษา  โครงเริ่มต้นด้านล่างให้เฉพาะชื่อฟังก์ชันและ `Uri` เป็นตัวอย่าง ส่วนการเรียก `http.put()` พร้อม body และการ print ผลลัพธ์ให้เขียนต่อเอง
@@ -478,8 +476,10 @@ Future<void> updateDemoPost() async {
 > ✅ **Checkpoint 3.2** ถ่ายภาพหน้าจอ Debug Console ที่แสดง Status Code ของการเรียก PUT (ควรเป็น `200 OK`) 
 
 ```text
-บันทึกรูปและคำตอบที่นี่
+ระบุว่าเป็นการทดสอบส่ง HTTP PUT ไปอัปเดตข้อมูลโพสต์ ID 1 โดยแนบชื่อและรหัสนักศึกษา ได้รับสถานะ 200 OK
 ```
+<img width="387" height="220" alt="image" src="https://github.com/user-attachments/assets/1c4346fd-98d8-4041-8ff9-2b26bd587ff0" />
+
 ---
 
 ## ส่วนที่ 4: ใช้ AI ช่วย Generate โค้ด API Client
